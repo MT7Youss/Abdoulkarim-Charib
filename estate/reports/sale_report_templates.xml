@@ -2,6 +2,9 @@
 <odoo>
     <data>
         <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        
+        <field name="training_date"/>
+        <field name="employee_id"/>
             
         </template>
     </data>

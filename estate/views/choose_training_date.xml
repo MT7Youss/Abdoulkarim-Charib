@@ -1,0 +1,14 @@
+<record id="view_choose_training_date_form" model="ir.ui.view">
+    <field name="name">view.choose_training_date.form</field>
+    <field name="model">sale.order</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="training_date"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>

@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Définissez le type de vue -->
+        <!-- Le type de vue -->
         <record id="view_sale_order_form" model="ir.ui.view">
             <field name="name">Vue de formulaire de commande de vente</field>
             <field name="model">sale.order</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <!-- Définissez la structure de votre vue -->
+                <!-- La structure de la vue -->
                 <form string="Commande de vente">
                     <sheet>
-                        <!-- Ajoutez les champs de date de formation et d'employé -->
+                        <!-- Ajouts des champs de date de formation et d'employé -->
                         <field name="training_date" />
                         <field name="employee_id" />
 
-                        <!-- Ajoutez un champ de montant d'approbation -->
+                        <!-- Ajout du champ de montant d'approbation -->
                         <field name="amount" />
 
-                        <!-- Ajoutez un champ de groupe de gestionnaire -->
+                        <!-- Ajout du champ de groupe de gestionnaire -->
                         <field name="manager_group_id" />
 
-                        <!-- Ajoutez un bouton pour demander l'approbation -->
+                        <!-- Ajout du bouton pour demander l'approbation -->
                         <button name="request_approval" string="Demander l'approbation" type="object" class="oe_highlight" attrs="{'invisible': [('amount', '<', 500)]}"/>
 
-                        <!-- Ajoutez un bouton de confirmation de commande de vente -->
+                        <!-- Ajout du bouton de confirmation de commande de vente -->
                         <button name="action_confirm" string="Confirmer la commande" type="object" class="oe_highlight" attrs="{'invisible': [('amount', '>=', 500)]}"/>
+                        
+                        <!-- Ajout du bouton de confirmation de commande de vente -->
+                        <button name="choose_training_date" string="Choisir la date de formation" type="object"/>                    
                     </sheet>
                 </form>
             </field>

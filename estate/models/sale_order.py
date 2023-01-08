@@ -105,5 +105,17 @@ class SaleOrder(models.Model):
         self.state = 'approved'
         self.approval_count += 1
         self.save()
+        
+    @api.multi
+    def choose_training_date(self):
+    # Création d'un assistant pour choisir la date de la formation
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Choisir la date de formation',
+            'view_mode': 'form',
+            'res_model': 'sale.order',
+            'target': 'new',
+            'context': {'default_training_date': self.training_date},
+    }    
     
 		

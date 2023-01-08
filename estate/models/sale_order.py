@@ -5,16 +5,16 @@ from erppeek import Client
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
-    
+
     # Ajoutez un champ de date de formation
     training_date = fields.Date('Date de formation')
 
     #Ajoutez un champ d'employé
     employee_id = fields.Many2one('hr.employee', string='Employé')
-    
+
     #Montant
     amount = fields.Float('Montant dapprobation')
-    
+
     #Déclaration d'un nouveau champ de type Many2one qui pointe vers le modèle de groupe d'Odoo (res.groups)
     manager_group_id = fields.Many2one('res.groups', string='Groupe de gestionnaire')
 
@@ -32,12 +32,15 @@ class SaleOrder(models.Model):
             'stop_date': training_date,
             'employee_id': employee.id
         }
+        if self.amount > self.partner_id.max_allowed_amount:
+            raise ValidationError("Le montant de la commande de vente est supérieur au montant maximal autorisé pour le partenaire.")
         event = Event.create(event_vals)
         return super(SaleOrder, self).action_confirm()
+    
     #Fonction qui vérifie si la probation est nécessaire 
     def requires_approval(self):
         amount = self.amount
-        manager_group = self.manager_group_id
+        manager_group = self.manager_group_id.name
         if amount < 500:
             return False
         elif 500 <= amount < 2000:

@@ -1,5 +1,6 @@
 from odoo import api, models, _, fields
 from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError
 from erppeek import Client
 
 
@@ -20,6 +21,12 @@ class SaleOrder(models.Model):
     
     #Déclaration d'un nouveau champ de type Many2one qui pointe vers le modèle de groupe d'Odoo (res.users)
     manager_id = fields.Many2one('res.users', string='Manager')
+    
+    # Ajout d'un champ de compteur pour l'attribution automatique des gestionnaires
+    approval_count = fields.Integer(string='Approval Count', default=0)
+
+    # Ajout d'une liste de gestionnaires pour l'attribution automatique
+    manager_ids = fields.Many2many('res.users', string='Managers')
 
 
     @api.multi
@@ -87,4 +94,16 @@ class SaleOrder(models.Model):
 
         # Enregistrez le manager sélectionné dans le champ manager_id
         self.manager_id = manager    
+        
+    @api.multi
+    def approve_sale_order(self):
+    # Vérification si l'utilisateur a les permissions
+        if not self.env.user.has_group('sale.group_sale_manager'):
+            raise AccessError("Vous n'avez pas les droits pour approuver cette commande de vente.")
+    
+    # Approuver la vente
+        self.state = 'approved'
+        self.approval_count += 1
+        self.save()
+    
 		

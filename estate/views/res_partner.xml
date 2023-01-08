@@ -1,6 +1,7 @@
 <xml version="1.0" encoding="utf-8"?>
 <odoo>
     ‹data>
-       
+       <button name="approve_sale_order" type="object" string="Approve Sale Order"/>
+
     </data>
 </odoo>

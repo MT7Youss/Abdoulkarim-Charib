@@ -7,5 +7,5 @@ class SaleOrderLine(models.Model):
     #add filds 
     #Training Date
     #############################
+    employee = fields.Char(string="employee")
     training_date = fields.Char(string="Training Date")
-    notes = fields.Text(string='Notes', required=False)
